@@ -1,0 +1,106 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery To-Do Application</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+
+<body>
+<main>
+    <div class="container">
+
+    <div class="page-header"> 
+        <h1>jQuery To-Do Application</h1>
+    </div>
+
+    <form id="form-add-todo" class="form-add-todo">
+        <input type="text" id="new-todo-item" class="new-todo-item" name="todo" placeholder ="Add an item..."/>
+        <input type="submit" id="add-todo-item" class="add-todo-item" value="Add an item" />
+    </form>
+  
+    <ul id="todo-list" class="todo-list">
+    </ul>
+
+</div>
+
+</main>
+<script>
+
+function addTodoItem() {
+
+  var todoItem = $("#new-todo-item").val();
+
+  $("#todo-list").append("<li><input type= 'checkbox'" +   " name='todo-item-done'" +  " class='todo-item-done'"+   " value='" + todoItem + "' />" +  todoItem +" <button class='todo-item-delete'>"+"Delete</button></li>");
+  
+ $("#new-todo-item").val("");
+
+}
+
+
+
+function deleteTodoItem(e, item) {
+
+  e.preventDefault();
+  
+  $(item).parent().fadeOut('slow', function() { 
+
+    $(item).parent().remove();
+  
+});
+}
+
+                           
+function completeTodoItem() {  
+
+  $(this).parent().toggleClass("strike");
+
+}
+
+
+
+$(document).ready(function() {
+ 
+   $("#add-todo-item").on('click', function(e){
+
+     e.preventDefault();
+
+     addTodoItem()
+
+   });
+ 
+   
+  $("#todo-list").on('click', '.todo-item-delete', function(e){
+
+    var item = this; 
+
+    deleteTodoItem(e, item)
+  })
+  
+
+  $("#todo-list").on('click', ".todo-item-done", function() {
+
+    var actualTime = "";
+
+    if ($(this).is(':checked')) {
+
+      $(this).parent().addClass("greyed");
+
+    } else {
+        $(this).parent().removeClass("greyed");
+    }
+
+    completeTodoItem()
+    
+
+  })
+
+})
+</script>
+
+</body> 
+</html>
